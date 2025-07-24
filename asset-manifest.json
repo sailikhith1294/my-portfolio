@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/sailikhith1294/likhith-portfolio.git/static/css/main.eb90278e.css",
+    "main.js": "/sailikhith1294/likhith-portfolio.git/static/js/main.81eab933.js",
+    "static/media/pic.png": "/sailikhith1294/likhith-portfolio.git/static/media/pic.92601ce6f2eb3c8c7e6c.png",
+    "index.html": "/sailikhith1294/likhith-portfolio.git/index.html",
+    "main.eb90278e.css.map": "/sailikhith1294/likhith-portfolio.git/static/css/main.eb90278e.css.map",
+    "main.81eab933.js.map": "/sailikhith1294/likhith-portfolio.git/static/js/main.81eab933.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.eb90278e.css",
+    "static/js/main.81eab933.js"
+  ]
+}
