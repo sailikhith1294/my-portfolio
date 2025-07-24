@@ -1,10 +1,8 @@
-
 {
   "name": "portfolio",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://github.com/sailikhith1294/likhith-portfolio.git",
-
+  "homepage": "https://github.com/sailikhith1294/my-portfolio.git",
   "dependencies": {
     "framer-motion": "^10.12.16",
     "react": "^18.2.0",
@@ -19,7 +17,8 @@
     "autoprefixer": "^10.4.14",
     "gh-pages": "^6.3.0",
     "postcss": "^8.4.21",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.3.2",
+    "vite-plugin-gh-pages": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
