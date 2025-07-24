@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.typewriter-loop {
+  display: inline-block;
+  overflow: hidden;
+  border-right: 2px solid #22d3ee;
+  white-space: nowrap;
+  width: 0ch;
+  animation: typing 7s steps(50, end) infinite,
+             blink 0.8s step-end infinite alternate;
+}
+
+@keyframes typing {
+  0%   { width: 0ch }
+  50%  { width: 53ch } /* ← matches text length */
+  75%  { width: 53ch }
+  100% { width: 0ch }
+}
+
