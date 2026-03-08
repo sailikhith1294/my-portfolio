@@ -51,13 +51,54 @@ export default function Portfolio() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-900 via-black to-cyan-900 text-white">
-        <div className="text-center">
-          <div className="text-3xl font-bold mb-4 animate-pulse">Loading Portfolio...</div>
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-900 via-black to-cyan-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" />
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
+          <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{animationDelay: '2s'}} />
+        </div>
+        <div className="text-center relative z-10">
+          <motion.div
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="text-6xl mb-6"
+          >
+            <span className="inline-block text-cyan-400 animate-pulse">⚡</span>
+          </motion.div>
+          <motion.div 
+            className="text-3xl font-bold mb-4 text-gradient"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            Loading Portfolio...
+          </motion.div>
           <div className="flex justify-center space-x-2">
-            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0s'}}></div>
-            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
-            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>
+            <motion.div 
+              className="w-4 h-4 bg-cyan-400 rounded-full"
+              animate={{ 
+                y: [-10, 10, -10],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div 
+              className="w-4 h-4 bg-cyan-400 rounded-full"
+              animate={{ 
+                y: [-10, 10, -10],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            />
+            <motion.div 
+              className="w-4 h-4 bg-cyan-400 rounded-full"
+              animate={{ 
+                y: [-10, 10, -10],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ duration: 1, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
+            />
           </div>
         </div>
       </div>
@@ -136,13 +177,59 @@ export default function Portfolio() {
   ];
 
   const hoverVariants = {
-    hover: { scale: 1.05, rotateX: 10, rotateY: 10, transition: { duration: 0.3 } },
+    hover: { 
+      scale: 1.05, 
+      rotateX: 10, 
+      rotateY: 10, 
+      transition: { 
+        type: "spring", 
+        stiffness: 300, 
+        damping: 15 
+      } 
+    },
   };
 
   const sectionVariants = {
-    initial: { opacity: 0, rotateX: -90 },
-    whileInView: { opacity: 1, rotateX: 0 },
-    transition: { duration: 1 }
+    initial: { opacity: 0, y: 50 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, ease: "easeOut" }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30, scale: 0.9 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 12
+      }
+    }
+  };
+
+  const floatingVariants = {
+    initial: { y: 0 },
+    animate: {
+      y: [-10, 10, -10],
+      transition: {
+        duration: 3,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
   };
 
   return (
@@ -173,26 +260,45 @@ export default function Portfolio() {
       </nav>
 
       <motion.section
-  className="pt-36 pb-16 text-center"
+  className="pt-36 pb-16 text-center relative overflow-hidden"
   initial="initial"
   whileInView="whileInView"
   viewport={{ once: true }}
   variants={sectionVariants}
 >
-  <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-    <motion.img
-      src={profile}
-      alt="Profile Picture"
-      className={`w-32 h-32 md:w-44 md:h-44 rounded-full border-4 ${darkMode ? 'border-cyan-400' : 'border-cyan-600'} shadow-2xl cursor-pointer object-cover`}
-      whileHover={{
-        scale: 1.1,
-        rotate: 5,
-        transition: { type: "spring", stiffness: 300 }
-      }}
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 1 }}
-    />
+  <motion.div 
+    className="absolute inset-0 opacity-30"
+    initial={{ backgroundPosition: "0% 50%" }}
+    animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+    transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+    style={{
+      background: darkMode 
+        ? 'linear-gradient(45deg, #0891b2, #06b6d4, #22d3ee, #06b6d4, #0891b2)'
+        : 'linear-gradient(45deg, #e0f2fe, #bae6fd, #7dd3fc, #bae6fd, #e0f2fe)',
+      backgroundSize: '200% 200%',
+      filter: 'blur(40px)'
+    }}
+  />
+  <div className="flex flex-col md:flex-row items-center justify-center gap-6 relative z-10">
+    <motion.div
+      variants={floatingVariants}
+      initial="initial"
+      animate="animate"
+    >
+      <motion.img
+        src={profile}
+        alt="Profile Picture"
+        className={`w-32 h-32 md:w-44 md:h-44 rounded-full border-4 ${darkMode ? 'border-cyan-400 shadow-[0_0_30px_rgba(34,211,238,0.5)]' : 'border-cyan-600 shadow-[0_0_30px_rgba(8,145,178,0.5)]'} cursor-pointer object-cover relative`}
+        whileHover={{
+          scale: 1.15,
+          rotate: [0, 5, -5, 0],
+          transition: { type: "spring", stiffness: 300 }
+        }}
+        initial={{ opacity: 0, scale: 0.6, rotate: -180 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      />
+    </motion.div>
     <div className="text-center md:text-left">
       <h1 className={`text-5xl md:text-7xl font-extrabold mb-2 leading-tight tracking-wide ${darkMode ? 'text-white' : 'text-gray-900'}`}>
         Hi, I'm{" "}
@@ -227,106 +333,254 @@ export default function Portfolio() {
 </motion.section>
 
 
-      <motion.section id="about" className="px-6 pt-10 pb-20 text-center" {...sectionVariants}>
-        <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>About Me</h2>
+      <motion.section 
+        id="about" 
+        className="px-6 pt-10 pb-20 text-center relative overflow-hidden"
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
+        <motion.div 
+          className="absolute top-0 right-0 w-64 h-64 bg-cyan-400/10 rounded-full filter blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.5, 0.3]
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+        />
+        <motion.div 
+          className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full filter blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.5, 0.3, 0.5]
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+        />
+        <motion.h2 
+          className={`text-4xl md:text-5xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'} relative z-10`}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        >
+          About Me
+        </motion.h2>
+        <motion.div
+          className={`w-24 h-1 mx-auto mb-6 rounded-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'} relative z-10`}
+          initial={{ width: 0 }}
+          whileInView={{ width: 96 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
         
-        <p className={`text-base md:text-lg max-w-4xl mx-auto leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+        <motion.p 
+          className={`text-base md:text-lg max-w-4xl mx-auto leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-700'} relative z-10`}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
   I'm <span className={`${darkMode ? 'text-cyan-400' : 'text-cyan-600'} font-semibold`}>Sai Likhith Golagani</span> from Rajahmundry, Andhra Pradesh. I aim to leverage my skills in full-stack development and AI to build smart, user-centric solutions. I'm driven by innovation and continuous learning, and I seek to contribute meaningfully to impactful tech teams.<br /><br />
   
   With expertise in React.js, Node.js, Express.js, MongoDB, and modern DevOps tools like Docker and Jenkins, I build scalable, secure applications. I've led technical teams, participated in national-level hackathons like Smart India Hackathon 2024, and helped secure funding for a startup.<br /><br />
   
   My journey is fueled by curiosity, creativity, and a love for solving real-world problems with code. I believe in learning by building, growing through collaboration, and staying resilient through challenges.
-</p>
+</motion.p>
 
       </motion.section>
 
-      <motion.section id="projects" className="px-6 py-20 text-center" {...sectionVariants}>
-        <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Projects</h2>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      <motion.section 
+        id="projects" 
+        className="px-6 py-20 text-center"
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
+        <motion.h2 
+          className={`text-4xl md:text-5xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          Projects
+        </motion.h2>
+        <motion.div
+          className={`w-24 h-1 mx-auto mb-10 rounded-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'}`}
+          initial={{ width: 0 }}
+          whileInView={{ width: 96 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
+        <motion.div 
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {projects.map((project, idx) => (
             <motion.div
               key={idx}
-              className={`${darkMode ? 'bg-gray-800/50 border-gray-700' : 'bg-white/80 border-gray-300'} backdrop-blur-sm p-6 rounded-2xl border shadow-lg text-left hover:shadow-2xl transition-shadow`}
-              whileHover="hover"
-              variants={hoverVariants}
+              className={`group ${darkMode ? 'bg-gray-800/50 border-gray-700' : 'bg-white/80 border-gray-300'} backdrop-blur-sm p-6 rounded-2xl border shadow-lg text-left hover:shadow-2xl transition-all relative overflow-hidden`}
+              variants={itemVariants}
+              whileHover={{ 
+                y: -10,
+                scale: 1.02,
+                boxShadow: darkMode 
+                  ? '0 20px 50px rgba(34, 211, 238, 0.3)' 
+                  : '0 20px 50px rgba(8, 145, 178, 0.3)'
+              }}
             >
-              <h3 className={`text-lg md:text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-3`}>{project.name}</h3>
+              <div className={`absolute top-0 left-0 w-full h-1 ${darkMode ? 'bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600' : 'bg-gradient-to-r from-cyan-600 via-blue-700 to-purple-800'} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+              <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className={`w-2 h-2 rounded-full ${darkMode ? 'bg-cyan-400' : 'bg-cyan-600'} animate-pulse`} />
+              </div>
+              <h3 className={`text-lg md:text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-3 group-hover:text-cyan-400 transition-colors`}>{project.name}</h3>
               <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-3 line-clamp-4`}>{project.description}</p>
               <div className="flex flex-wrap gap-2 mb-4">
                 {project.tech.map((tech, i) => (
-                  <span key={i} className={`text-xs px-2 py-1 rounded-md ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'}`}>{tech}</span>
+                  <motion.span 
+                    key={i} 
+                    className={`text-xs px-2 py-1 rounded-md ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'}`}
+                    whileHover={{ scale: 1.1, y: -2 }}
+                    transition={{ type: "spring", stiffness: 400 }}
+                  >
+                    {tech}
+                  </motion.span>
                 ))}
               </div>
-              <a href={project.link} target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} text-sm font-semibold inline-flex items-center transition`}>View Code <FaExternalLinkAlt className="ml-2" /></a>
+              <a href={project.link} target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} text-sm font-semibold inline-flex items-center transition group-hover:translate-x-1`}>
+                View Code <FaExternalLinkAlt className="ml-2 group-hover:rotate-12 transition-transform" />
+              </a>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </motion.section>
 
-      <motion.section id="skills" className="px-6 py-20 text-center" {...sectionVariants}>
-        <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Technical Skills</h2>
-        <div className="max-w-6xl mx-auto text-left space-y-6">
-          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
-            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Languages</h3>
-            <div className="flex flex-wrap gap-3">
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>C</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>C++</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Python</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>JavaScript</span>
+      <motion.section 
+        id="skills" 
+        className="px-6 py-20 text-center"
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
+        <motion.h2 
+          className={`text-4xl md:text-5xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          Technical Skills
+        </motion.h2>
+        <motion.div
+          className={`w-24 h-1 mx-auto mb-10 rounded-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'}`}
+          initial={{ width: 0 }}
+          whileInView={{ width: 96 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
+        <motion.div 
+          className="max-w-6xl mx-auto text-left space-y-6"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <motion.div 
+            className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative overflow-hidden`}
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, y: -5 }}
+          >
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${darkMode ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-gradient-to-br from-cyan-600 to-blue-800'}`} />
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4 relative z-10`}>Languages</h3>
+            <div className="flex flex-wrap gap-3 relative z-10">
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>C</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>C++</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Python</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>JavaScript</motion.span>
             </div>
-          </div>
-          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
-            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Web Development</h3>
-            <div className="flex flex-wrap gap-3">
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>HTML</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>CSS</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>React.js</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Node.js</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Express.js</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>JWT Authentication</span>
+          </motion.div>
+          <motion.div 
+            className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative overflow-hidden`}
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, y: -5 }}
+          >
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${darkMode ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-gradient-to-br from-cyan-600 to-blue-800'}`} />
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4 relative z-10`}>Web Development</h3>
+            <div className="flex flex-wrap gap-3 relative z-10">
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>HTML</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>CSS</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>React.js</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Node.js</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Express.js</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>JWT Authentication</motion.span>
             </div>
-          </div>
-          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
-            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Databases</h3>
-            <div className="flex flex-wrap gap-3">
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>SQL Server</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>MySQL</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>MongoDB</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>PostgreSQL</span>
+          </motion.div>
+          <motion.div 
+            className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative overflow-hidden`}
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, y: -5 }}
+          >
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${darkMode ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-gradient-to-br from-cyan-600 to-blue-800'}`} />
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4 relative z-10`}>Databases</h3>
+            <div className="flex flex-wrap gap-3 relative z-10">
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>SQL Server</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>MySQL</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>MongoDB</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>PostgreSQL</motion.span>
             </div>
-          </div>
-          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
-            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Cloud & DevOps</h3>
-            <div className="flex flex-wrap gap-3">
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Git</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>GitHub</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Docker</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Docker Compose</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Jenkins CI/CD</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Render</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Vercel</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Netlify</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Postman</span>
+          </motion.div>
+          <motion.div 
+            className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative overflow-hidden`}
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, y: -5 }}
+          >
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${darkMode ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-gradient-to-br from-cyan-600 to-blue-800'}`} />
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4 relative z-10`}>Cloud & DevOps</h3>
+            <div className="flex flex-wrap gap-3 relative z-10">
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Git</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>GitHub</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Docker</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Docker Compose</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Jenkins CI/CD</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Render</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Vercel</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Netlify</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Postman</motion.span>
             </div>
-          </div>
-          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
-            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Computer Vision</h3>
-            <div className="flex flex-wrap gap-3">
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>OpenCV</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Haar Cascade</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Real-time Image Processing</span>
+          </motion.div>
+          <motion.div 
+            className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative overflow-hidden`}
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, y: -5 }}
+          >
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${darkMode ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-gradient-to-br from-cyan-600 to-blue-800'}`} />
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4 relative z-10`}>Computer Vision</h3>
+            <div className="flex flex-wrap gap-3 relative z-10">
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>OpenCV</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Haar Cascade</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Real-time Image Processing</motion.span>
             </div>
-          </div>
-          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
-            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Soft Skills</h3>
-            <div className="flex flex-wrap gap-3">
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Problem-Solving</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Team Collaboration</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Project Coordination</span>
-              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Resilience</span>
+          </motion.div>
+          <motion.div 
+            className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative overflow-hidden`}
+            variants={itemVariants}
+            whileHover={{ scale: 1.02, y: -5 }}
+          >
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${darkMode ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-gradient-to-br from-cyan-600 to-blue-800'}`} />
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4 relative z-10`}>Soft Skills</h3>
+            <div className="flex flex-wrap gap-3 relative z-10">
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Problem-Solving</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Team Collaboration</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Project Coordination</motion.span>
+              <motion.span whileHover={{ scale: 1.1, y: -3 }} className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium cursor-pointer`}>Resilience</motion.span>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </motion.section>
 
       <motion.section
@@ -334,126 +588,354 @@ export default function Portfolio() {
   className="px-6 py-20 text-center"
   initial="initial"
   whileInView="whileInView"
-  viewport={{ once: true }}
+  viewport={{ once: true, amount: 0.2 }}
   variants={sectionVariants}
 >
-  <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Certificates</h2>
-  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+  <motion.h2 
+    className={`text-4xl md:text-5xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+    initial={{ opacity: 0, scale: 0.8 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+  >
+    Certificates
+  </motion.h2>
+  <motion.div
+    className={`w-24 h-1 mx-auto mb-10 rounded-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'}`}
+    initial={{ width: 0 }}
+    whileInView={{ width: 96 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.8, delay: 0.3 }}
+  />
+  <motion.div 
+    className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto"
+    variants={containerVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.2 }}
+  >
     {certificates.map((certificate, idx) => (
       <motion.div
         key={idx}
-        className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl shadow-lg text-left flex items-start gap-4 hover:shadow-xl transition-shadow`}
-        whileHover={{ scale: 1.03 }}
+        className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl shadow-lg text-left flex items-start gap-4 hover:shadow-2xl transition-all relative overflow-hidden`}
+        variants={itemVariants}
+        whileHover={{ 
+          scale: 1.05, 
+          y: -8,
+          rotateY: 5,
+          transition: { type: "spring", stiffness: 300 }
+        }}
       >
-        <div className={`text-3xl ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`}>{certificate.icon}</div>
-        <h3 className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>{certificate.name}</h3>
+        <div className={`absolute top-0 right-0 w-20 h-20 ${darkMode ? 'bg-cyan-400/10' : 'bg-cyan-600/10'} rounded-full -mr-10 -mt-10 group-hover:scale-150 transition-transform duration-500`} />
+        <motion.div 
+          className={`text-3xl ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} relative z-10`}
+          whileHover={{ rotate: 360, scale: 1.2 }}
+          transition={{ duration: 0.6 }}
+        >
+          {certificate.icon}
+        </motion.div>
+        <h3 className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'} relative z-10`}>{certificate.name}</h3>
       </motion.div>
     ))}
-  </div>
+  </motion.div>
 </motion.section>
 <motion.section
   id="achievements"
   className="px-6 py-20 text-center"
   initial="initial"
   whileInView="whileInView"
-  viewport={{ once: true }}
+  viewport={{ once: true, amount: 0.2 }}
   variants={sectionVariants}
 >
-  <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Achievements</h2>
-  <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left">
+  <motion.h2 
+    className={`text-4xl md:text-5xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+    initial={{ opacity: 0, y: -20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+  >
+    Achievements
+  </motion.h2>
+  <motion.div
+    className={`w-24 h-1 mx-auto mb-10 rounded-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'}`}
+    initial={{ width: 0 }}
+    whileInView={{ width: 96 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.8, delay: 0.3 }}
+  />
+  <motion.div 
+    className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left"
+    variants={containerVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.2 }}
+  >
     {achievements.map((item, idx) => (
       <motion.div
         key={idx}
-        className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl shadow-lg flex items-start gap-4 hover:shadow-xl transition-shadow`}
-        whileHover={{ scale: 1.03 }}
+        className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl shadow-lg flex items-start gap-4 hover:shadow-2xl transition-all relative overflow-hidden`}
+        variants={itemVariants}
+        whileHover={{ 
+          scale: 1.03, 
+          y: -8,
+          boxShadow: darkMode 
+            ? '0 25px 50px rgba(34, 211, 238, 0.3)' 
+            : '0 25px 50px rgba(8, 145, 178, 0.3)'
+        }}
       >
-        <div className={`text-4xl ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`}>{item.icon}</div>
-        <div>
+        <div className={`absolute inset-0 ${darkMode ? 'bg-gradient-to-br from-cyan-500/0 to-blue-500/0' : 'bg-gradient-to-br from-cyan-600/0 to-blue-600/0'} group-hover:from-cyan-500/5 group-hover:to-blue-500/5 transition-all duration-500`} />
+        <motion.div 
+          className={`text-4xl ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} relative z-10`}
+          whileHover={{ scale: 1.2, rotate: [0, -10, 10, 0] }}
+          transition={{ duration: 0.5 }}
+        >
+          {item.icon}
+        </motion.div>
+        <div className="relative z-10">
           <h3 className={`text-lg font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-2`}>{item.title}</h3>
           <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{item.description}</p>
         </div>
       </motion.div>
     ))}
-  </div>
+  </motion.div>
 </motion.section>
 
-      <motion.section id="blogs" className="px-6 py-20" {...sectionVariants}>
-        <h2 className={`text-4xl md:text-5xl font-bold mb-10 text-center ${darkMode ? 'text-white' : 'text-gray-900'}`}>My Blogs</h2>
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+      <motion.section 
+        id="blogs" 
+        className="px-6 py-20"
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
+        <motion.h2 
+          className={`text-4xl md:text-5xl font-bold mb-4 text-center ${darkMode ? 'text-white' : 'text-gray-900'}`}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        >
+          My Blogs
+        </motion.h2>
+        <motion.div
+          className={`w-24 h-1 mx-auto mb-10 rounded-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'}`}
+          initial={{ width: 0 }}
+          whileInView={{ width: 96 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
+        <motion.div 
+          className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
           {blogs.map((blog, idx) => (
             <motion.div
               key={idx}
-              className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl shadow-lg border hover:shadow-xl transition-shadow`}
-              whileHover="hover"
-              variants={hoverVariants}
+              className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl shadow-lg border hover:shadow-2xl transition-all relative overflow-hidden`}
+              variants={itemVariants}
+              whileHover={{ 
+                y: -10, 
+                scale: 1.02,
+                boxShadow: darkMode 
+                  ? '0 20px 50px rgba(34, 211, 238, 0.3)' 
+                  : '0 20px 50px rgba(8, 145, 178, 0.3)'
+              }}
             >
-              <h3 className={`text-xl font-bold mb-3 ${darkMode ? 'text-cyan-300' : 'text-cyan-700'}`}>{blog.title}</h3>
+              <div className={`absolute bottom-0 left-0 h-1 w-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
+              <h3 className={`text-xl font-bold mb-3 ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} group-hover:text-cyan-400 transition-colors`}>{blog.title}</h3>
               <p className={`mb-4 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{blog.summary}</p>
-              <a href={blog.link} target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} font-semibold hover:underline inline-flex items-center`}>
-                Read Blog <FaExternalLinkAlt className="ml-2" />
+              <a href={blog.link} target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} font-semibold hover:underline inline-flex items-center group-hover:translate-x-2 transition-transform`}>
+                Read Blog <FaExternalLinkAlt className="ml-2 group-hover:rotate-12 transition-transform" />
               </a>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </motion.section>
 
       
 
 
-      <motion.section id="education" className="px-6 py-20 text-center" {...sectionVariants}>
-  <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Education</h2>
-  <div className="space-y-6 max-w-4xl mx-auto text-left">
-    <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-xl transition-shadow`}>
+      <motion.section 
+        id="education" 
+        className="px-6 py-20 text-center"
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
+  <motion.h2 
+    className={`text-4xl md:text-5xl font-bold mb-4 ${darkMode ? 'text-white' : 'text-gray-900'}`}
+    initial={{ opacity: 0, y: -20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+  >
+    Education
+  </motion.h2>
+  <motion.div
+    className={`w-24 h-1 mx-auto mb-10 rounded-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'}`}
+    initial={{ width: 0 }}
+    whileInView={{ width: 96 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.8, delay: 0.3 }}
+  />
+  <motion.div 
+    className="space-y-6 max-w-4xl mx-auto text-left relative"
+    variants={containerVariants}
+    initial="hidden"
+    whileInView="visible"
+    viewport={{ once: true, amount: 0.2 }}
+  >
+    {/* Timeline line */}
+    <div className={`absolute left-8 top-0 bottom-0 w-1 ${darkMode ? 'bg-gradient-to-b from-cyan-400 via-blue-500 to-purple-600' : 'bg-gradient-to-b from-cyan-600 via-blue-700 to-purple-800'} hidden md:block`} />
+    
+    <motion.div 
+      className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative md:ml-16 overflow-hidden`}
+      variants={itemVariants}
+      whileHover={{ x: 10, scale: 1.02 }}
+    >
+      <div className={`absolute left-0 top-0 bottom-0 w-2 ${darkMode ? 'bg-gradient-to-b from-cyan-400 to-blue-500' : 'bg-gradient-to-b from-cyan-600 to-blue-700'} transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top`} />
+      <div className={`absolute -left-16 top-8 w-8 h-8 ${darkMode ? 'bg-cyan-400' : 'bg-cyan-600'} rounded-full border-4 ${darkMode ? 'border-gray-900' : 'border-gray-100'} hidden md:block group-hover:scale-125 transition-transform`} />
       <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-2`}>Lovely Professional University</h3>
       <p className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Bachelor of Technology in Computer Science & Engineering</p>
       <p className={`text-sm ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} font-medium mt-2`}>Aug 2022 - Present | CGPA: 7.54</p>
       <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>Jalandhar, Punjab</p>
-    </div>
-    <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-xl transition-shadow`}>
+    </motion.div>
+    <motion.div 
+      className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative md:ml-16 overflow-hidden`}
+      variants={itemVariants}
+      whileHover={{ x: 10, scale: 1.02 }}
+    >
+      <div className={`absolute left-0 top-0 bottom-0 w-2 ${darkMode ? 'bg-gradient-to-b from-cyan-400 to-blue-500' : 'bg-gradient-to-b from-cyan-600 to-blue-700'} transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top`} />
+      <div className={`absolute -left-16 top-8 w-8 h-8 ${darkMode ? 'bg-blue-500' : 'bg-blue-700'} rounded-full border-4 ${darkMode ? 'border-gray-900' : 'border-gray-100'} hidden md:block group-hover:scale-125 transition-transform`} />
       <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-2`}>Tirumala College</h3>
       <p className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Intermediate (12th) - MPC</p>
       <p className={`text-sm ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} font-medium mt-2`}>2020 - 2022 | Percentage: 92%</p>
       <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>Rajahmundry, Andhra Pradesh</p>
-    </div>
-    <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-xl transition-shadow`}>
+    </motion.div>
+    <motion.div 
+      className={`group p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl transition-all relative md:ml-16 overflow-hidden`}
+      variants={itemVariants}
+      whileHover={{ x: 10, scale: 1.02 }}
+    >
+      <div className={`absolute left-0 top-0 bottom-0 w-2 ${darkMode ? 'bg-gradient-to-b from-cyan-400 to-blue-500' : 'bg-gradient-to-b from-cyan-600 to-blue-700'} transform scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-top`} />
+      <div className={`absolute -left-16 top-8 w-8 h-8 ${darkMode ? 'bg-purple-600' : 'bg-purple-800'} rounded-full border-4 ${darkMode ? 'border-gray-900' : 'border-gray-100'} hidden md:block group-hover:scale-125 transition-transform`} />
       <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-2`}>Oakwood School</h3>
       <p className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Secondary Education (10th)</p>
       <p className={`text-sm ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} font-medium mt-2`}>2019 - 2020 | Percentage: 90%</p>
       <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>Rajahmundry, Andhra Pradesh</p>
-    </div>
-  </div>
+    </motion.div>
+  </motion.div>
 </motion.section>
 
 
-      <motion.section id="contact" className="px-6 py-20 text-center" {...sectionVariants}>
-        <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Get In Touch</h2>
-        <p className={`text-base md:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-8 max-w-2xl mx-auto`}>Feel free to reach out to me via social media, email, or phone. I'm always open to discussing new projects, creative ideas, or opportunities!</p>
-        <div className="space-y-6 max-w-2xl mx-auto">
-          <div className="flex justify-center space-x-8 text-4xl">
-            <a href="https://github.com/sailikhith1294" target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} title="GitHub" aria-label="GitHub Profile">
+      <motion.section 
+        id="contact" 
+        className="px-6 py-20 text-center relative overflow-hidden"
+        initial="initial"
+        whileInView="whileInView"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={sectionVariants}
+      >
+        <motion.div 
+          className="absolute inset-0 opacity-10"
+          initial={{ rotate: 0 }}
+          animate={{ rotate: 360 }}
+          transition={{ duration: 50, repeat: Infinity, ease: "linear" }}
+          style={{
+            background: darkMode 
+              ? 'radial-gradient(circle at 50% 50%, #06b6d4 0%, transparent 50%), radial-gradient(circle at 80% 20%, #3b82f6 0%, transparent 50%)' 
+              : 'radial-gradient(circle at 50% 50%, #0891b2 0%, transparent 50%), radial-gradient(circle at 80% 20%, #2563eb 0%, transparent 50%)'
+          }}
+        />
+        <motion.h2 
+          className={`text-4xl md:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'} relative z-10`}
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+        >
+          Get In Touch
+        </motion.h2>
+        <motion.div
+          className={`w-24 h-1 mx-auto mb-8 rounded-full ${darkMode ? 'bg-gradient-to-r from-cyan-400 to-blue-500' : 'bg-gradient-to-r from-cyan-600 to-blue-700'} relative z-10`}
+          initial={{ width: 0 }}
+          whileInView={{ width: 96 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        />
+        <motion.p 
+          className={`text-base md:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-8 max-w-2xl mx-auto relative z-10`}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          Feel free to reach out to me via social media, email, or phone. I'm always open to discussing new projects, creative ideas, or opportunities!
+        </motion.p>
+        <div className="space-y-6 max-w-2xl mx-auto relative z-10">
+          <motion.div 
+            className="flex justify-center space-x-8 text-4xl"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            <motion.a 
+              href="https://github.com/sailikhith1294" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} 
+              title="GitHub" 
+              aria-label="GitHub Profile"
+              variants={itemVariants}
+              whileHover={{ y: -10, rotate: [0, -5, 5, 0] }}
+            >
               <FaGithub />
-            </a>
-            <a href="https://www.linkedin.com/in/likhith-golagani/" target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} title="LinkedIn" aria-label="LinkedIn Profile">
+            </motion.a>
+            <motion.a 
+              href="https://www.linkedin.com/in/likhith-golagani/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} 
+              title="LinkedIn" 
+              aria-label="LinkedIn Profile"
+              variants={itemVariants}
+              whileHover={{ y: -10, rotate: [0, -5, 5, 0] }}
+            >
               <FaLinkedin />
-            </a>
-            <a href="mailto:likhithgolagani1294@gmail.com" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} title="Email" aria-label="Send Email">
+            </motion.a>
+            <motion.a 
+              href="mailto:likhithgolagani1294@gmail.com" 
+              className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} 
+              title="Email" 
+              aria-label="Send Email"
+              variants={itemVariants}
+              whileHover={{ y: -10, rotate: [0, -5, 5, 0] }}
+            >
               <FaEnvelope />
-            </a>
-          </div>
-          <div className={`${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl p-6 shadow-lg space-y-3`}>
-            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+            </motion.a>
+          </motion.div>
+          <motion.div 
+            className={`group ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl p-6 shadow-lg space-y-3 hover:shadow-2xl transition-all relative overflow-hidden`}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity ${darkMode ? 'bg-gradient-to-br from-cyan-400 to-blue-600' : 'bg-gradient-to-br from-cyan-600 to-blue-800'}`} />
+            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'} relative z-10`}>
               <strong className={darkMode ? 'text-white' : 'text-gray-900'}>Email:</strong> 
               <a href="mailto:likhithgolagani1294@gmail.com" className={`ml-2 ${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} hover:underline font-medium`}>likhithgolagani1294@gmail.com</a>
             </p>
-            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'} relative z-10`}>
               <strong className={darkMode ? 'text-white' : 'text-gray-900'}>Phone:</strong> 
               <a href="tel:+918179785050" className={`ml-2 ${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} hover:underline font-medium`}>+91 8179785050</a>
             </p>
-            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'} relative z-10`}>
               <strong className={darkMode ? 'text-white' : 'text-gray-900'}>Location:</strong> 
               <span className="ml-2">Rajahmundry, Andhra Pradesh 533103, India</span>
             </p>
-          </div>
+          </motion.div>
         </div>
       </motion.section>
 
