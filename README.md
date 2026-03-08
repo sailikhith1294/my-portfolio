@@ -8,14 +8,17 @@ Visit the live site: [https://sailikhith1294.github.io/likhith-portfolio](https:
 
 ## 📋 Features
 
-- ✨ Modern and responsive design
-- 🎨 Interactive particle background
-- 🌓 Dark/Light mode toggle
-- 📱 Mobile-friendly navigation
+- ✨ Modern and fully responsive design
+- 🎨 Interactive particle background with dynamic colors
+- 🌓 **Smart Dark/Light mode** with proper color contrast
+- 📱 Mobile-first navigation with optimized layout
 - ⚡ Smooth animations with Framer Motion
-- 🎯 Sections: About, Projects, Skills, Certificates, Achievements, Blogs, Education, Contact
-- 📄 Downloadable resume
-- 🔗 Social media integration
+- 🎯 Comprehensive sections: About, Projects, Skills, Certificates, Achievements, Blogs, Education, Contact
+- 📄 Downloadable resume with one-click access
+- 🔗 Fully functional social media integration
+- ♿ Accessibility-focused with ARIA labels and keyboard navigation
+- 🎨 Professional gradient buttons and hover effects
+- 📊 SEO optimized with comprehensive meta tags
 
 ## 🛠️ Technologies Used
 

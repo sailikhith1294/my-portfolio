@@ -20,13 +20,13 @@ export default function Portfolio() {
 
   const particlesOptions = {
     fullScreen: { enable: true, zIndex: -1 },
-    background: { color: darkMode ? "#0f0f0f" : "#ffffff" },
+    background: { color: darkMode ? "#0f0f0f" : "#f8fafc" },
     particles: {
       number: { value: 50 },
-      size: { value: 4 },
+      size: { value: 3 },
       move: { enable: true, speed: 1 },
-      links: { enable: true, color: "#00ffff" },
-      color: { value: "#00ffff" },
+      links: { enable: true, color: darkMode ? "#00ffff" : "#0891b2" },
+      color: { value: darkMode ? "#00ffff" : "#0891b2" },
     },
     interactivity: {
       events: {
@@ -51,8 +51,15 @@ export default function Portfolio() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-screen bg-black text-white text-2xl animate-pulse">
-        Fetching bits and bytes..
+      <div className="flex items-center justify-center h-screen bg-gradient-to-br from-gray-900 via-black to-cyan-900 text-white">
+        <div className="text-center">
+          <div className="text-3xl font-bold mb-4 animate-pulse">Loading Portfolio...</div>
+          <div className="flex justify-center space-x-2">
+            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0s'}}></div>
+            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.4s'}}></div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -139,28 +146,30 @@ export default function Portfolio() {
   };
 
   return (
-    <div className={`${darkMode ? 'bg-transparent text-white' : 'bg-transparent text-black'} transition-all duration-500 min-h-screen scroll-smooth font-sans relative`}>
+    <div className={`${darkMode ? 'bg-transparent text-white' : 'bg-transparent text-gray-900'} transition-all duration-500 min-h-screen scroll-smooth font-sans relative`}>
 
           <Particles init={particlesInit} options={particlesOptions} />
 
-      <nav className="fixed top-0 left-0 w-full z-50 backdrop-blur bg-black/30 px-6 py-4 flex justify-between items-center shadow-xl border-b border-gray-700">
-        <motion.h1 initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className="text-2xl font-bold tracking-wide">
+      <nav className={`fixed top-0 left-0 w-full z-50 backdrop-blur-md ${darkMode ? 'bg-black/40 border-gray-700' : 'bg-white/40 border-gray-300'} px-4 md:px-6 py-4 flex flex-wrap justify-between items-center shadow-xl border-b transition-colors`}>
+        <motion.h1 initial={{ x: -100, opacity: 0 }} animate={{ x: 0, opacity: 1 }} className={`text-xl md:text-2xl font-bold tracking-wide ${darkMode ? 'text-white' : 'text-gray-900'}`}>
           Sai Likhith Golagani
         </motion.h1>
-        <motion.div className="space-x-4 text-sm font-medium" initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
-          <a href="#about" className="hover:text-cyan-400 transition">About</a>
-          <a href="#projects" className="hover:text-cyan-400 transition">Projects</a>
-          <a href="#skills" className="hover:text-cyan-400 transition">Skills</a>
-          <a href="#certificates" className="hover:text-cyan-400 transition">Certificates</a>
-          <a href="#achievements" className="hover:text-cyan-400 transition">Achievements</a>
-          <a href="#blogs" className="hover:text-cyan-400 transition">Blogs</a>
-          <a href="#education" className="hover:text-cyan-400 transition">Education</a>
-
-          <a href="#contact" className="hover:text-cyan-400 transition">Contact</a>
-          <button onClick={() => setDarkMode(!darkMode)} className="bg-cyan-600 px-3 py-1.5 rounded-full hover:bg-cyan-700 transition text-white">
-            {darkMode ? 'Light' : 'Dark'} Mode
+        <motion.div className="hidden lg:flex space-x-4 text-sm font-medium items-center" initial={{ x: 100, opacity: 0 }} animate={{ x: 0, opacity: 1 }}>
+          <a href="#about" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition`}>About</a>
+          <a href="#projects" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition`}>Projects</a>
+          <a href="#skills" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition`}>Skills</a>
+          <a href="#certificates" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition`}>Certificates</a>
+          <a href="#achievements" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition`}>Achievements</a>
+          <a href="#blogs" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition`}>Blogs</a>
+          <a href="#education" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition`}>Education</a>
+          <a href="#contact" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition`}>Contact</a>
+          <button onClick={() => setDarkMode(!darkMode)} className="bg-gradient-to-r from-cyan-500 to-cyan-600 px-4 py-2 rounded-full hover:from-cyan-600 hover:to-cyan-700 transition text-white shadow-lg font-semibold">
+            {darkMode ? '☀️ Light' : '🌙 Dark'}
           </button>
         </motion.div>
+        <button onClick={() => setDarkMode(!darkMode)} className="lg:hidden bg-gradient-to-r from-cyan-500 to-cyan-600 px-3 py-1.5 rounded-full hover:from-cyan-600 hover:to-cyan-700 transition text-white shadow-md text-sm">
+          {darkMode ? '☀️' : '🌙'}
+        </button>
       </nav>
 
       <motion.section
@@ -173,8 +182,8 @@ export default function Portfolio() {
   <div className="flex flex-col md:flex-row items-center justify-center gap-6">
     <motion.img
       src={profile}
-      alt="Bitmoj"
-      className="w-28 h-28 md:w-40 md:h-40 rounded-full border-4 border-cyan-400 shadow-xl cursor-pointer"
+      alt="Profile Picture"
+      className={`w-32 h-32 md:w-44 md:h-44 rounded-full border-4 ${darkMode ? 'border-cyan-400' : 'border-cyan-600'} shadow-2xl cursor-pointer object-cover`}
       whileHover={{
         scale: 1.1,
         rotate: 5,
@@ -185,10 +194,10 @@ export default function Portfolio() {
       transition={{ duration: 1 }}
     />
     <div className="text-center md:text-left">
-      <h1 className="text-6xl md:text-7xl font-extrabold mb-2 leading-tight tracking-wide">
+      <h1 className={`text-5xl md:text-7xl font-extrabold mb-2 leading-tight tracking-wide ${darkMode ? 'text-white' : 'text-gray-900'}`}>
         Hi, I'm{" "}
         <motion.span
-          className="inline-block text-cyan-400 glow-text"
+          className={`inline-block ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} glow-text`}
           initial={{ rotateY: 90, opacity: 0 }}
           animate={{ rotateY: 0, opacity: 1 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
@@ -197,7 +206,7 @@ export default function Portfolio() {
           Sai Likhith
         </motion.span>
       </h1>
-      <p className="text-xl md:text-2xl mt-4 text-cyan-300 font-medium">
+      <p className={`text-lg md:text-2xl mt-4 ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} font-medium`}>
         <span className="typewriter-loop">
           Full Stack Developer | Tech Enthusiast | Problem Solver
         </span>
@@ -207,9 +216,9 @@ export default function Portfolio() {
   href={`${process.env.PUBLIC_URL}/resume.pdf`}
   target="_blank"
   rel="noopener noreferrer"
-  className="inline-block mt-6 px-6 py-3 bg-cyan-500 text-white font-semibold rounded-full hover:bg-cyan-600 transition shadow-lg"
+  className="inline-block mt-6 px-8 py-3 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white font-semibold rounded-full hover:from-cyan-600 hover:to-cyan-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105"
 >
-  View Resume
+  📄 View Resume
 </a>
 
 
@@ -219,10 +228,10 @@ export default function Portfolio() {
 
 
       <motion.section id="about" className="px-6 pt-10 pb-20 text-center" {...sectionVariants}>
-        <h2 className="text-4xl font-bold mb-4">About Me</h2>
+        <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>About Me</h2>
         
-        <p className="text-lg max-w-3xl mx-auto leading-relaxed text-gray-300">
-  I'm <span className="text-cyan-400 font-semibold">Sai Likhith Golagani</span> from Rajahmundry, Andhra Pradesh. I aim to leverage my skills in full-stack development and AI to build smart, user-centric solutions. I'm driven by innovation and continuous learning, and I seek to contribute meaningfully to impactful tech teams.<br /><br />
+        <p className={`text-base md:text-lg max-w-4xl mx-auto leading-relaxed ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+  I'm <span className={`${darkMode ? 'text-cyan-400' : 'text-cyan-600'} font-semibold`}>Sai Likhith Golagani</span> from Rajahmundry, Andhra Pradesh. I aim to leverage my skills in full-stack development and AI to build smart, user-centric solutions. I'm driven by innovation and continuous learning, and I seek to contribute meaningfully to impactful tech teams.<br /><br />
   
   With expertise in React.js, Node.js, Express.js, MongoDB, and modern DevOps tools like Docker and Jenkins, I build scalable, secure applications. I've led technical teams, participated in national-level hackathons like Smart India Hackathon 2024, and helped secure funding for a startup.<br /><br />
   
@@ -232,85 +241,89 @@ export default function Portfolio() {
       </motion.section>
 
       <motion.section id="projects" className="px-6 py-20 text-center" {...sectionVariants}>
-        <h2 className="text-3xl font-bold mb-6">Projects</h2>
-        <div className="grid md:grid-cols-3 gap-6">
+        <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Projects</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
           {projects.map((project, idx) => (
             <motion.div
               key={idx}
-              className="bg-black/30 p-6 rounded-xl border border-gray-700 shadow-lg text-left"
+              className={`${darkMode ? 'bg-gray-800/50 border-gray-700' : 'bg-white/80 border-gray-300'} backdrop-blur-sm p-6 rounded-2xl border shadow-lg text-left hover:shadow-2xl transition-shadow`}
               whileHover="hover"
               variants={hoverVariants}
             >
-              <h3 className="text-xl font-semibold text-cyan-300 mb-2">{project.name}</h3>
-              <p className="text-sm mb-2">{project.description}</p>
-              <div className="text-xs text-gray-400 mb-3">{project.tech.join(', ')}</div>
-              <a href={project.link} target="_blank" className="text-cyan-400 text-sm inline-flex items-center">View Code <FaExternalLinkAlt className="ml-2" /></a>
+              <h3 className={`text-lg md:text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-3`}>{project.name}</h3>
+              <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-3 line-clamp-4`}>{project.description}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.tech.map((tech, i) => (
+                  <span key={i} className={`text-xs px-2 py-1 rounded-md ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'}`}>{tech}</span>
+                ))}
+              </div>
+              <a href={project.link} target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} text-sm font-semibold inline-flex items-center transition`}>View Code <FaExternalLinkAlt className="ml-2" /></a>
             </motion.div>
           ))}
         </div>
       </motion.section>
 
       <motion.section id="skills" className="px-6 py-20 text-center" {...sectionVariants}>
-        <h2 className="text-3xl font-bold mb-6">Technical Skills</h2>
-        <div className="max-w-5xl mx-auto text-left space-y-6">
-          <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-            <h3 className="text-xl font-semibold text-cyan-300 mb-3">Languages</h3>
+        <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Technical Skills</h2>
+        <div className="max-w-6xl mx-auto text-left space-y-6">
+          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Languages</h3>
             <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">C</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">C++</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Python</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">JavaScript</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>C</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>C++</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Python</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>JavaScript</span>
             </div>
           </div>
-          <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-            <h3 className="text-xl font-semibold text-cyan-300 mb-3">Web Development</h3>
+          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Web Development</h3>
             <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">HTML</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">CSS</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">React.js</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Node.js</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Express.js</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">JWT Authentication</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>HTML</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>CSS</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>React.js</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Node.js</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Express.js</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>JWT Authentication</span>
             </div>
           </div>
-          <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-            <h3 className="text-xl font-semibold text-cyan-300 mb-3">Databases</h3>
+          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Databases</h3>
             <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">SQL Server</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">MySQL</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">MongoDB</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">PostgreSQL</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>SQL Server</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>MySQL</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>MongoDB</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>PostgreSQL</span>
             </div>
           </div>
-          <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-            <h3 className="text-xl font-semibold text-cyan-300 mb-3">Cloud & DevOps</h3>
+          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Cloud & DevOps</h3>
             <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Git</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">GitHub</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Docker</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Docker Compose</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Jenkins CI/CD</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Render</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Vercel</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Netlify</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Postman</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Git</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>GitHub</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Docker</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Docker Compose</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Jenkins CI/CD</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Render</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Vercel</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Netlify</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Postman</span>
             </div>
           </div>
-          <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-            <h3 className="text-xl font-semibold text-cyan-300 mb-3">Computer Vision</h3>
+          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Computer Vision</h3>
             <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">OpenCV</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Haar Cascade</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Real-time Image Processing</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>OpenCV</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Haar Cascade</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Real-time Image Processing</span>
             </div>
           </div>
-          <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
-            <h3 className="text-xl font-semibold text-cyan-300 mb-3">Soft Skills</h3>
+          <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg`}>
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-4`}>Soft Skills</h3>
             <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Problem-Solving</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Team Collaboration</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Project Coordination</span>
-              <span className="px-4 py-2 bg-cyan-500/20 rounded-lg">Resilience</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Problem-Solving</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Team Collaboration</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Project Coordination</span>
+              <span className={`px-4 py-2 ${darkMode ? 'bg-cyan-500/20 text-cyan-300' : 'bg-cyan-100 text-cyan-800'} rounded-lg font-medium`}>Resilience</span>
             </div>
           </div>
         </div>
@@ -324,16 +337,16 @@ export default function Portfolio() {
   viewport={{ once: true }}
   variants={sectionVariants}
 >
-  <h2 className="text-3xl font-bold mb-8">Certificates</h2>
-  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+  <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Certificates</h2>
+  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
     {certificates.map((certificate, idx) => (
       <motion.div
         key={idx}
-        className="p-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-md text-left flex items-start gap-4"
+        className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl shadow-lg text-left flex items-start gap-4 hover:shadow-xl transition-shadow`}
         whileHover={{ scale: 1.03 }}
       >
-        <div className="text-3xl text-cyan-400">{certificate.icon}</div>
-        <h3 className="text-lg font-semibold text-cyan-300">{certificate.name}</h3>
+        <div className={`text-3xl ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`}>{certificate.icon}</div>
+        <h3 className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>{certificate.name}</h3>
       </motion.div>
     ))}
   </div>
@@ -346,38 +359,38 @@ export default function Portfolio() {
   viewport={{ once: true }}
   variants={sectionVariants}
 >
-  <h2 className="text-3xl font-bold mb-8">Achievements</h2>
+  <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Achievements</h2>
   <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto text-left">
     {achievements.map((item, idx) => (
       <motion.div
         key={idx}
-        className="p-6 bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl shadow-md flex items-start gap-4"
+        className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl shadow-lg flex items-start gap-4 hover:shadow-xl transition-shadow`}
         whileHover={{ scale: 1.03 }}
       >
-        <div className="text-3xl text-cyan-400">{item.icon}</div>
+        <div className={`text-4xl ${darkMode ? 'text-cyan-400' : 'text-cyan-600'}`}>{item.icon}</div>
         <div>
-          <h3 className="text-lg font-semibold text-cyan-300">{item.title}</h3>
-          <p className="text-sm text-gray-300 mt-2">{item.description}</p>
+          <h3 className={`text-lg font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-2`}>{item.title}</h3>
+          <p className={`text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{item.description}</p>
         </div>
       </motion.div>
     ))}
   </div>
 </motion.section>
 
-      <motion.section id="blogs" className="px-6 py-16" {...sectionVariants}>
-        <h2 className="text-3xl font-bold mb-8 text-center">My Blogs</h2>
-        <div className="grid md:grid-cols-2 gap-6">
+      <motion.section id="blogs" className="px-6 py-20" {...sectionVariants}>
+        <h2 className={`text-4xl md:text-5xl font-bold mb-10 text-center ${darkMode ? 'text-white' : 'text-gray-900'}`}>My Blogs</h2>
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {blogs.map((blog, idx) => (
             <motion.div
               key={idx}
-              className="p-6 bg-black/30 rounded-xl shadow-lg border border-gray-700"
+              className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl shadow-lg border hover:shadow-xl transition-shadow`}
               whileHover="hover"
               variants={hoverVariants}
             >
-              <h3 className="text-xl font-semibold mb-2">{blog.title}</h3>
-              <p className="mb-3 text-sm text-gray-300">{blog.summary}</p>
-              <a href={blog.link} target="_blank" rel="noopener noreferrer" className="text-cyan-400 hover:underline">
-                Read Blog
+              <h3 className={`text-xl font-bold mb-3 ${darkMode ? 'text-cyan-300' : 'text-cyan-700'}`}>{blog.title}</h3>
+              <p className={`mb-4 text-sm ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>{blog.summary}</p>
+              <a href={blog.link} target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} font-semibold hover:underline inline-flex items-center`}>
+                Read Blog <FaExternalLinkAlt className="ml-2" />
               </a>
             </motion.div>
           ))}
@@ -388,54 +401,73 @@ export default function Portfolio() {
 
 
       <motion.section id="education" className="px-6 py-20 text-center" {...sectionVariants}>
-  <h2 className="text-3xl font-bold mb-8">Education</h2>
-  <div className="space-y-6 max-w-3xl mx-auto text-left">
-    <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg">
-      <h3 className="text-xl font-semibold text-cyan-300">Lovely Professional University</h3>
-      <p className="text-sm text-gray-300">Bachelor of Technology in Computer Science & Engineering</p>
-      <p className="text-sm text-cyan-400 mt-1">Aug 2022 - Present | CGPA: 7.54</p>
-      <p className="text-sm text-gray-400 mt-2">Jalandhar, Punjab</p>
+  <h2 className={`text-4xl md:text-5xl font-bold mb-10 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Education</h2>
+  <div className="space-y-6 max-w-4xl mx-auto text-left">
+    <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-xl transition-shadow`}>
+      <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-2`}>Lovely Professional University</h3>
+      <p className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Bachelor of Technology in Computer Science & Engineering</p>
+      <p className={`text-sm ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} font-medium mt-2`}>Aug 2022 - Present | CGPA: 7.54</p>
+      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>Jalandhar, Punjab</p>
     </div>
-    <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg">
-      <h3 className="text-xl font-semibold text-cyan-300">Tirumala College</h3>
-      <p className="text-sm text-gray-300">Intermediate (12th) - MPC</p>
-      <p className="text-sm text-cyan-400 mt-1">2020 - 2022 | Percentage: 92%</p>
-      <p className="text-sm text-gray-400 mt-2">Rajahmundry, Andhra Pradesh</p>
+    <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-xl transition-shadow`}>
+      <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-2`}>Tirumala College</h3>
+      <p className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Intermediate (12th) - MPC</p>
+      <p className={`text-sm ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} font-medium mt-2`}>2020 - 2022 | Percentage: 92%</p>
+      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>Rajahmundry, Andhra Pradesh</p>
     </div>
-    <div className="p-6 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 shadow-lg">
-      <h3 className="text-xl font-semibold text-cyan-300">Oakwood School</h3>
-      <p className="text-sm text-gray-300">Secondary Education (10th)</p>
-      <p className="text-sm text-cyan-400 mt-1">2019 - 2020 | Percentage: 90%</p>
-      <p className="text-sm text-gray-400 mt-2">Rajahmundry, Andhra Pradesh</p>
+    <div className={`p-6 ${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-xl transition-shadow`}>
+      <h3 className={`text-xl font-bold ${darkMode ? 'text-cyan-300' : 'text-cyan-700'} mb-2`}>Oakwood School</h3>
+      <p className={`text-base font-semibold ${darkMode ? 'text-gray-200' : 'text-gray-800'}`}>Secondary Education (10th)</p>
+      <p className={`text-sm ${darkMode ? 'text-cyan-400' : 'text-cyan-600'} font-medium mt-2`}>2019 - 2020 | Percentage: 90%</p>
+      <p className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-600'} mt-1`}>Rajahmundry, Andhra Pradesh</p>
     </div>
   </div>
 </motion.section>
 
 
       <motion.section id="contact" className="px-6 py-20 text-center" {...sectionVariants}>
-        <h2 className="text-3xl font-bold mb-6">Contact</h2>
-        <p className="text-lg text-gray-300 mb-4">Feel free to reach out to me via social media, email, or phone!</p>
-        <div className="space-y-4 max-w-2xl mx-auto">
-          <div className="flex justify-center space-x-6 text-3xl">
-            <a href="https://github.com/sailikhith1294" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition" title="GitHub"><FaGithub /></a>
-            <a href="https://www.linkedin.com/in/likhith-golagani/" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition" title="LinkedIn"><FaLinkedin /></a>
-            <a href="mailto:likhityhgolagani1294@gmail.com" className="hover:text-cyan-400 transition" title="Email"><FaEnvelope /></a>
+        <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-gray-900'}`}>Get In Touch</h2>
+        <p className={`text-base md:text-lg ${darkMode ? 'text-gray-300' : 'text-gray-700'} mb-8 max-w-2xl mx-auto`}>Feel free to reach out to me via social media, email, or phone. I'm always open to discussing new projects, creative ideas, or opportunities!</p>
+        <div className="space-y-6 max-w-2xl mx-auto">
+          <div className="flex justify-center space-x-8 text-4xl">
+            <a href="https://github.com/sailikhith1294" target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} title="GitHub" aria-label="GitHub Profile">
+              <FaGithub />
+            </a>
+            <a href="https://www.linkedin.com/in/likhith-golagani/" target="_blank" rel="noopener noreferrer" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} title="LinkedIn" aria-label="LinkedIn Profile">
+              <FaLinkedin />
+            </a>
+            <a href="mailto:likhithgolagani1294@gmail.com" className={`${darkMode ? 'hover:text-cyan-400' : 'hover:text-cyan-600'} transition-all transform hover:scale-110`} title="Email" aria-label="Send Email">
+              <FaEnvelope />
+            </a>
           </div>
-          <div className="text-gray-300 space-y-2">
-            <p><strong>Email:</strong> <a href="mailto:likhityhgolagani1294@gmail.com" className="text-cyan-400 hover:underline">likhityhgolagani1294@gmail.com</a></p>
-            <p><strong>Phone:</strong> <a href="tel:+918179785050" className="text-cyan-400 hover:underline">+91 8179785050</a></p>
-            <p><strong>Location:</strong> Rajahmundry, Andhra Pradesh 533103</p>
+          <div className={`${darkMode ? 'bg-gray-800/60 border-gray-700' : 'bg-white/90 border-gray-300'} backdrop-blur-sm border rounded-2xl p-6 shadow-lg space-y-3`}>
+            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              <strong className={darkMode ? 'text-white' : 'text-gray-900'}>Email:</strong> 
+              <a href="mailto:likhithgolagani1294@gmail.com" className={`ml-2 ${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} hover:underline font-medium`}>likhithgolagani1294@gmail.com</a>
+            </p>
+            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              <strong className={darkMode ? 'text-white' : 'text-gray-900'}>Phone:</strong> 
+              <a href="tel:+918179785050" className={`ml-2 ${darkMode ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-600 hover:text-cyan-700'} hover:underline font-medium`}>+91 8179785050</a>
+            </p>
+            <p className={`text-sm md:text-base ${darkMode ? 'text-gray-300' : 'text-gray-700'}`}>
+              <strong className={darkMode ? 'text-white' : 'text-gray-900'}>Location:</strong> 
+              <span className="ml-2">Rajahmundry, Andhra Pradesh 533103, India</span>
+            </p>
           </div>
         </div>
       </motion.section>
 
       {showTopBtn && (
-        <button
+        <motion.button
           onClick={scrollToTop}
-          className="fixed bottom-5 right-5 bg-cyan-600 hover:bg-cyan-700 text-white p-3 rounded-full shadow-lg z-50"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="fixed bottom-6 right-6 bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white p-4 rounded-full shadow-2xl z-50 transform hover:scale-110 transition-all"
+          whileHover={{ y: -5 }}
+          aria-label="Scroll to top"
         >
-          <FaArrowUp />
-        </button>
+          <FaArrowUp className="text-xl" />
+        </motion.button>
       )}
     </div>
   );
